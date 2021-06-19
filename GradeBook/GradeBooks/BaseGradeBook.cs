@@ -8,22 +8,25 @@ using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
 {
-    public class BaseGradeBook : IBaseGradeBook
+    public class BaseGradeBook 
     {
+        private readonly GradeBookLoader _gradeBookLoader;
         private readonly Logger _logger;
         private readonly exceptionHandler _exceptionHandler;
-        //public string Name { get; set; }
-        //public List<Student> Students { get; set; }
-        public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler)
+        public string Name { get; set; }
+        public List<Student> Students { get; set; }
+        public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, GradeBookLoader gradeBookLoader)
         {
             Name = name;
             Students = new List<Student>();
             logger = _logger;
             _exceptionHandler = exceptionHandler;
+            _gradeBookLoader = gradeBookLoader;
         }
-
+        
         public void AddGrade(string name, double score)
         {
+            
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("A Name is required to add a grade to a student.");
             var student = Students.FirstOrDefault(e => e.Name == name);
@@ -32,9 +35,9 @@ namespace GradeBook.GradeBooks
                 _logger.log("Student {0} was not found, try again.", name);
                 return;
             }
-            student.AddGrade(score);
+            //student.AddGrade(score);
         }
-
+        
         public void RemoveGrade(string name, double score)
         {
             if (string.IsNullOrEmpty(name))
@@ -78,13 +81,10 @@ namespace GradeBook.GradeBooks
             }
         }
 
-        public static BaseGradeBook Load(string name)
+        
+        public void LoadedGradeBook(string name)
         {
-            if (!File.Exists(name + ".gdbk"))
-            {
-                Console.WriteLine("Gradebook could not be found.");
-                return null;
-            }
+            _gradeBookLoader.Load(name);
 
             using (var file = new FileStream(name + ".gdbk", FileMode.Open, FileAccess.Read))
             {

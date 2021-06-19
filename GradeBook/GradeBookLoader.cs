@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GradeBook
 {
-    class GradeBookLoader
+    public class GradeBookLoader
     {
         private readonly Logger _logger;
         public GradeBookLoader(Logger logger)
