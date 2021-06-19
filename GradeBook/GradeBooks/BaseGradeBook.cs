@@ -8,12 +8,12 @@ using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
 {
-    public class BaseGradeBook
+    public class BaseGradeBook : IBaseGradeBook
     {
         private readonly Logger _logger;
         private readonly exceptionHandler _exceptionHandler;
-        public string Name { get; set; }
-        public List<Student> Students { get; set; }
+        //public string Name { get; set; }
+        //public List<Student> Students { get; set; }
         public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler)
         {
             Name = name;
@@ -46,6 +46,27 @@ namespace GradeBook.GradeBooks
                 return;
             }
             student.RemoveGrade(score);
+        }
+
+        public void AddStudent(Student student)
+        {
+            if (string.IsNullOrEmpty(student.Name))
+                _exceptionHandler.HandleException("A Name is required to add a student to a gradebook.");
+            Students.Add(student);
+        }
+
+        public void RemoveStudent(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                _exceptionHandler.HandleException("A Name is required to remove a student from a gradebook.");
+            var student = Students.FirstOrDefault(e => e.Name == name);
+
+            if (student == null)
+            {
+                _logger.log("Student {0} was not found, try again.", name);
+                return;
+            }
+            Students.Remove(student);
         }
 
         public void ListStudents()

@@ -54,26 +54,7 @@ namespace GradeBook
             _studentGradeCollectioner.Grades.Remove(grade);
         }
 
-        public void AddStudent(Student student)
-        {
-            if (string.IsNullOrEmpty(student.Name))
-            _exceptionHandler.HandleException("A Name is required to add a student to a gradebook.");
-            Students.Add(student);
-        }
-
-        public void RemoveStudent(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            _exceptionHandler.HandleException("A Name is required to remove a student from a gradebook.");
-            var student = Students.FirstOrDefault(e => e.Name == name);
-
-            if (student == null)
-            {
-                _logger.log("Student {0} was not found, try again.", name);
-                return;
-            }
-            Students.Remove(student);
-        }
+      
 
     }
 }
