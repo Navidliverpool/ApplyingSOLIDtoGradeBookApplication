@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-
 using GradeBook.Enums;
 using System.Collections.Generic;
 using System.IO;
@@ -11,33 +10,16 @@ namespace GradeBook.GradeBooks
 {
     public class BaseGradeBook
     {
+        private readonly Logger _logger;
+        private readonly exceptionHandler _exceptionHandler;
         public string Name { get; set; }
         public List<Student> Students { get; set; }
-
-        public BaseGradeBook(string name)
+        public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler)
         {
             Name = name;
             Students = new List<Student>();
-        }
-
-        public void AddStudent(Student student)
-        {
-            if (string.IsNullOrEmpty(student.Name))
-                throw new ArgumentException("A Name is required to add a student to a gradebook.");
-            Students.Add(student);
-        }
-
-        public void RemoveStudent(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("A Name is required to remove a student from a gradebook.");
-            var student = Students.FirstOrDefault(e => e.Name == name);
-            if (student == null)
-            {
-                Console.WriteLine("Student {0} was not found, try again.", name);
-                return;
-            }
-            Students.Remove(student);
+            logger = _logger;
+            _exceptionHandler = exceptionHandler;
         }
 
         public void AddGrade(string name, double score)
@@ -47,7 +29,7 @@ namespace GradeBook.GradeBooks
             var student = Students.FirstOrDefault(e => e.Name == name);
             if (student == null)
             {
-                Console.WriteLine("Student {0} was not found, try again.", name);
+                _logger.log("Student {0} was not found, try again.", name);
                 return;
             }
             student.AddGrade(score);
@@ -60,7 +42,7 @@ namespace GradeBook.GradeBooks
             var student = Students.FirstOrDefault(e => e.Name == name);
             if (student == null)
             {
-                Console.WriteLine("Student {0} was not found, try again.", name);
+                _logger.log("Student {0} was not found, try again.", name);
                 return;
             }
             student.RemoveGrade(score);
@@ -71,6 +53,7 @@ namespace GradeBook.GradeBooks
             foreach (var student in Students)
             {
                 Console.WriteLine("{0} : {1} : {2}", student.Name, student.Type, student.Enrollment);
+               
             }
         }
 
