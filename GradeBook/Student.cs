@@ -33,7 +33,7 @@ namespace GradeBook
             _logger = logger;
             _exceptionHandler = exceptionHandler;
             _studentGradeCollectioner = studentGradeCollectioner;
-    }
+        }
 
         public Student(string name, StudentType studentType, EnrollmentType enrollment)
         {
