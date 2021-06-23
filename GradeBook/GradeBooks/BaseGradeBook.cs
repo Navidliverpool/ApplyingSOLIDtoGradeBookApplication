@@ -8,13 +8,15 @@ using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
 {
-    public class BaseGradeBook 
+    public class BaseGradeBook : IBaseGradeBook
     {
         private readonly GradeBookLoader _gradeBookLoader;
         private readonly Logger _logger;
         private readonly exceptionHandler _exceptionHandler;
         public string Name { get; set; }
-        public List<Student> Students { get; set; }
+        public List<Student> Students { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        //public List<Student> Students { get; set; }
         public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, GradeBookLoader gradeBookLoader)
         {
             Name = name;
@@ -28,7 +30,8 @@ namespace GradeBook.GradeBooks
         {
             
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("A Name is required to add a grade to a student.");
+                //throw new ArgumentException("A Name is required to add a grade to a student.");
+            _logger.log("A Name is required to add a grade to a student.");
 
             var student = Students.FirstOrDefault(e => e.Name == name);
             if (student == null)
