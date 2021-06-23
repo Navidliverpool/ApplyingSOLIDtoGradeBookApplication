@@ -14,14 +14,14 @@ namespace GradeBook
             _logger = logger;
         }
 
-        public void CheckIfStudentQueryIsNull(string name)
+        public Student CheckIfStudentQueryIsNullOtherwiseAddIt(string name)
         {
             var student = Students.FirstOrDefault(e => e.Name == name);
             if (student == null)
             {
                 _logger.log("Student {0} was not found, try again.", name);
-                return;
             }
+            return student;
         }
     }
 }
