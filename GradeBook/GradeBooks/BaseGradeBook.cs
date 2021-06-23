@@ -19,7 +19,7 @@ namespace GradeBook.GradeBooks
         {
             Name = name;
             Students = new List<Student>();
-            logger = _logger;
+            _logger = logger;
             _exceptionHandler = exceptionHandler;
             _gradeBookLoader = gradeBookLoader;
         }
@@ -29,13 +29,14 @@ namespace GradeBook.GradeBooks
             
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("A Name is required to add a grade to a student.");
+
             var student = Students.FirstOrDefault(e => e.Name == name);
             if (student == null)
             {
                 _logger.log("Student {0} was not found, try again.", name);
                 return;
             }
-            //student.AddGrade(score);
+            student.AddGrade(score);
         }
         
         public void RemoveGrade(string name, double score)

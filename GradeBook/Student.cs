@@ -9,6 +9,7 @@ namespace GradeBook
 {
     public class Student
     {
+        private readonly MinMaxGradeDefinder _minMaxGradeDefinder;
         private readonly StudentGradeCollectioner _studentGradeCollectioner;
         private readonly exceptionHandler _exceptionHandler;
         private readonly Logger _logger;
@@ -28,11 +29,12 @@ namespace GradeBook
                 return _studentGradeCollectioner.Grades.Average();
             }
         }
-        public Student(Logger logger, exceptionHandler exceptionHandler, StudentGradeCollectioner studentGradeCollectioner)
+        public Student(Logger logger, exceptionHandler exceptionHandler, StudentGradeCollectioner studentGradeCollectioner, MinMaxGradeDefinder minMaxGradeDefinder)
         {
             _logger = logger;
             _exceptionHandler = exceptionHandler;
             _studentGradeCollectioner = studentGradeCollectioner;
+            _minMaxGradeDefinder = minMaxGradeDefinder;
         }
 
         public Student(string name, StudentType studentType, EnrollmentType enrollment)
@@ -42,10 +44,11 @@ namespace GradeBook
             Enrollment = enrollment;
         }
 
-        public void AddGrade(double grade, double minimumGrade, double maximunGrade)
-        {
-            if (grade < minimumGrade || grade > maximunGrade)
-            _exceptionHandler.HandleException("Grades must be between {i} and {j}." , minimumGrade, maximunGrade);
+        public void AddGrade(double grade)
+        {            
+            if (grade < _minMaxGradeDefinder.MinimumGrade || grade > _minMaxGradeDefinder.MaximumGrade)
+            _exceptionHandler.HandleException("Grades must be between {i} and {j}." , _minMaxGradeDefinder.MinimumGrade, _minMaxGradeDefinder.MaximumGrade);
+
             _studentGradeCollectioner.Grades.Add(grade);
         }
 
