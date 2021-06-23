@@ -48,7 +48,6 @@ namespace GradeBook
         {            
             if (grade < _minMaxGradeDefinder.MinimumGrade || grade > _minMaxGradeDefinder.MaximumGrade)
             _exceptionHandler.HandleException("Grades must be between {i} and {j}." , _minMaxGradeDefinder.MinimumGrade, _minMaxGradeDefinder.MaximumGrade);
-
             _studentGradeCollectioner.Grades.Add(grade);
         }
 
