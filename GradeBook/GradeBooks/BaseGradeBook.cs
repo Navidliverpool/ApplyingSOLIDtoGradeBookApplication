@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
 {
-    public class BaseGradeBook : IBaseGradeBook
+    public class BaseGradeBook
     {
         private readonly MethodParameterNullCheckerGradeBook _methodParameterNullCheckerGradeBook;
         private readonly StudentInGradeBookNullCheckerGradeBook _studentInGradeBookNullCheckerGradeBook;

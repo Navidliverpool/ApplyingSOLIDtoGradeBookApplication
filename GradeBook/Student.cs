@@ -16,7 +16,7 @@ namespace GradeBook
         public string Name { get; set; }
         public StudentType Type { get; set; }
         public EnrollmentType Enrollment { get; set; }
-        public List<Student> Students { get; set; }
+        //public List<Student> Students { get; set; }
         [JsonIgnore]
         public char LetterGrade { get; set; }
         [JsonIgnore]
