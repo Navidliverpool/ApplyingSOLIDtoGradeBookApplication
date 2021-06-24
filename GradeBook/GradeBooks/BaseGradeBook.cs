@@ -11,7 +11,7 @@ namespace GradeBook.GradeBooks
     public class BaseGradeBook
     {
         private readonly MethodParameterNullCheckerGradeBook _methodParameterNullCheckerGradeBook;
-        private readonly StudentInGradeBookNullCheckerGradeBook _studentInGradeBookNullCheckerGradeBook;
+        private readonly StudentNullCheckerGradeBook _studentNullCheckerGradeBook;
         private readonly GradeBookLoader _gradeBookLoader;
         private readonly Logger _logger;
         private readonly exceptionHandler _exceptionHandler;
@@ -19,7 +19,7 @@ namespace GradeBook.GradeBooks
         public List<Student> Students { get; set; }
 
         public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, GradeBookLoader gradeBookLoader,
-          StudentInGradeBookNullCheckerGradeBook StudentInGradeBookNullCheckerGradeBook,
+          StudentNullCheckerGradeBook StudentNullCheckerGradeBook,
           MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook)
         {
             Name = name;
@@ -27,21 +27,21 @@ namespace GradeBook.GradeBooks
             _logger = logger;
             _exceptionHandler = exceptionHandler;
             _gradeBookLoader = gradeBookLoader;
-            _studentInGradeBookNullCheckerGradeBook = StudentInGradeBookNullCheckerGradeBook;
+            _studentNullCheckerGradeBook = StudentNullCheckerGradeBook;
             _methodParameterNullCheckerGradeBook = methodParameterNullCheckerGradeBook;
         }
         
         public void AddGrade(string name, double score)
         {
             _methodParameterNullCheckerGradeBook.StudentNameCheckForNull(name);
-            var student = _studentInGradeBookNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
+            var student = _studentNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
             student.AddGrade(score);
         }
         
         public void RemoveGrade(string name, double score)
         {
             _methodParameterNullCheckerGradeBook.StudentNameCheckForNull(name);
-            var student = _studentInGradeBookNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
+            var student = _studentNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
             student.RemoveGrade(score);
         }
 

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace GradeBook
 {
-    public class StudentInGradeBookNullCheckerGradeBook : IBaseGradeBook
+    public class StudentNullCheckerGradeBook : IBaseGradeBook
     {
         private readonly Logger _logger;
         public List<Student> Students { get; set; }
-        public StudentInGradeBookNullCheckerGradeBook(Logger logger)
+        public StudentNullCheckerGradeBook(Logger logger)
         {
             _logger = logger;
         }
