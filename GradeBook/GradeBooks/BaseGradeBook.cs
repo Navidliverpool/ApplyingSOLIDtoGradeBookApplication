@@ -16,9 +16,8 @@ namespace GradeBook.GradeBooks
         private readonly Logger _logger;
         private readonly exceptionHandler _exceptionHandler;
         public string Name { get; set; }
-        public List<Student> Students { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<Student> Students { get; set; }
 
-        //public List<Student> Students { get; set; }
         public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, GradeBookLoader gradeBookLoader,
           StudentInGradeBookNullCheckerGradeBook StudentInGradeBookNullCheckerGradeBook,
           MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook)
@@ -41,14 +40,8 @@ namespace GradeBook.GradeBooks
         
         public void RemoveGrade(string name, double score)
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("A Name is required to remove a grade from a student.");
-            var student = Students.FirstOrDefault(e => e.Name == name);
-            if (student == null)
-            {
-                _logger.log("Student {0} was not found, try again.", name);
-                return;
-            }
+            _methodParameterNullCheckerGradeBook.StudentNameCheckForNull(name);
+            var student = _studentInGradeBookNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
             student.RemoveGrade(score);
         }
 

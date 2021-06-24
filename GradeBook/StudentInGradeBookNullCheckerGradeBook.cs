@@ -8,7 +8,7 @@ namespace GradeBook
     public class StudentInGradeBookNullCheckerGradeBook : IBaseGradeBook
     {
         private readonly Logger _logger;
-        public List<Student> Students { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<Student> Students { get; set; }
         public StudentInGradeBookNullCheckerGradeBook(Logger logger)
         {
             _logger = logger;
