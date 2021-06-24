@@ -10,6 +10,7 @@ namespace GradeBook.GradeBooks
 {
     public class BaseGradeBook
     {
+        private readonly AddRemoveStudents _addRemoveStudents;
         private readonly MethodParameterNullCheckerGradeBook _methodParameterNullCheckerGradeBook;
         private readonly StudentNullCheckerGradeBook _studentNullCheckerGradeBook;
         private readonly GradeBookLoader _gradeBookLoader;
@@ -18,9 +19,11 @@ namespace GradeBook.GradeBooks
         public string Name { get; set; }
         public List<Student> Students { get; set; }
 
-        public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, GradeBookLoader gradeBookLoader,
+        public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, 
+          GradeBookLoader gradeBookLoader,
           StudentNullCheckerGradeBook StudentNullCheckerGradeBook,
-          MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook)
+          MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook,
+          AddRemoveStudents addRemoveStudents)
         {
             Name = name;
             Students = new List<Student>();
@@ -29,6 +32,7 @@ namespace GradeBook.GradeBooks
             _gradeBookLoader = gradeBookLoader;
             _studentNullCheckerGradeBook = StudentNullCheckerGradeBook;
             _methodParameterNullCheckerGradeBook = methodParameterNullCheckerGradeBook;
+            _addRemoveStudents = addRemoveStudents;
         }
         
         public void AddGrade(string name, double score)
@@ -47,8 +51,7 @@ namespace GradeBook.GradeBooks
 
         public void AddStudent(Student student)
         {
-            if (string.IsNullOrEmpty(student.Name))
-                _exceptionHandler.HandleException("A Name is required to add a student to a gradebook.");
+          _addRemoveStudents.StudentNameNullCheckForAddRemoveStudents(student);
             Students.Add(student);
         }
 
