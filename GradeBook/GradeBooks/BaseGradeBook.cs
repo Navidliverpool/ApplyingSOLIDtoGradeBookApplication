@@ -10,8 +10,8 @@ namespace GradeBook.GradeBooks
 {
     public class BaseGradeBook : IBaseGradeBook
     {
-        private readonly AddGradeMethodParameterNullCheckerGradeBook _addGradeMethodParameterNullCheckerGradeBook;
-        private readonly AddGradeToStudentInGradeBookNullChecker _addGradeToStudentInGradeBookNullChecker;
+        private readonly MethodParameterNullCheckerGradeBook _methodParameterNullCheckerGradeBook;
+        private readonly StudentInGradeBookNullCheckerGradeBook _studentInGradeBookNullCheckerGradeBook;
         private readonly GradeBookLoader _gradeBookLoader;
         private readonly Logger _logger;
         private readonly exceptionHandler _exceptionHandler;
@@ -20,35 +20,23 @@ namespace GradeBook.GradeBooks
 
         //public List<Student> Students { get; set; }
         public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, GradeBookLoader gradeBookLoader,
-          AddGradeToStudentInGradeBookNullChecker addGradeToStudentInGradeBookNullChecker,
-          AddGradeMethodParameterNullCheckerGradeBook addGradeMethodParameterNullCheckerGradeBook)
+          StudentInGradeBookNullCheckerGradeBook StudentInGradeBookNullCheckerGradeBook,
+          MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook)
         {
             Name = name;
             Students = new List<Student>();
             _logger = logger;
             _exceptionHandler = exceptionHandler;
             _gradeBookLoader = gradeBookLoader;
-            _addGradeToStudentInGradeBookNullChecker = addGradeToStudentInGradeBookNullChecker;
-            _addGradeMethodParameterNullCheckerGradeBook = addGradeMethodParameterNullCheckerGradeBook;
+            _studentInGradeBookNullCheckerGradeBook = StudentInGradeBookNullCheckerGradeBook;
+            _methodParameterNullCheckerGradeBook = methodParameterNullCheckerGradeBook;
         }
         
         public void AddGrade(string name, double score)
         {
-
-            //if (string.IsNullOrEmpty(name))
-            ////throw new ArgumentException("A Name is required to add a grade to a student.");
-            //_logger.log("A Name is required to add a grade to a student.");
-
-            //var student = Students.FirstOrDefault(e => e.Name == name);
-            //if (student == null)
-            //{
-            //    _logger.log("Student {0} was not found, try again.", name);
-            //    return;
-            //}
-            _addGradeMethodParameterNullCheckerGradeBook.StudentNameCheckForNull(name);
-            var student = _addGradeToStudentInGradeBookNullChecker.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
+            _methodParameterNullCheckerGradeBook.StudentNameCheckForNull(name);
+            var student = _studentInGradeBookNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
             student.AddGrade(score);
-                //student.AddGrade(score);
         }
         
         public void RemoveGrade(string name, double score)

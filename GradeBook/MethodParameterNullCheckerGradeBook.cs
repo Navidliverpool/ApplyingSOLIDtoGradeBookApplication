@@ -4,10 +4,10 @@ using System.Text;
 
 namespace GradeBook
 {
-    public class AddGradeMethodParameterNullCheckerGradeBook
+    public class MethodParameterNullCheckerGradeBook
     {
         private readonly Logger _logger;
-        public AddGradeMethodParameterNullCheckerGradeBook(Logger logger)
+        public MethodParameterNullCheckerGradeBook(Logger logger)
         {
             _logger = logger;
         }
