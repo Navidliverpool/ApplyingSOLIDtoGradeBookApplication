@@ -13,10 +13,6 @@ namespace GradeBook
         private readonly StudentGradeCollectioner _studentGradeCollectioner;
         private readonly exceptionHandler _exceptionHandler;
         private readonly Logger _logger;
-        public string Name { get; set; }
-        public StudentType Type { get; set; }
-        public EnrollmentType Enrollment { get; set; }
-        //public List<Student> Students { get; set; }
         [JsonIgnore]
         public char LetterGrade { get; set; }
         [JsonIgnore]
@@ -35,13 +31,6 @@ namespace GradeBook
             _exceptionHandler = exceptionHandler;
             _studentGradeCollectioner = studentGradeCollectioner;
             _minMaxGradeDefinder = minMaxGradeDefinder;
-        }
-
-        public Student(string name, StudentType studentType, EnrollmentType enrollment)
-        {
-            Name = name;
-            Type = studentType;
-            Enrollment = enrollment;
         }
 
         public void AddGrade(double grade)
