@@ -19,7 +19,9 @@ namespace GradeBook.GradeBooks
         public string Name { get; set; }
         public List<Student> Students { get; set; }
 
-        public BaseGradeBook(string name, Logger logger,exceptionHandler exceptionHandler, 
+        public BaseGradeBook(string name, 
+          Logger logger,
+          exceptionHandler exceptionHandler, 
           GradeBookLoader gradeBookLoader,
           StudentNullCheckerGradeBook StudentNullCheckerGradeBook,
           MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook,
@@ -57,15 +59,8 @@ namespace GradeBook.GradeBooks
 
         public void RemoveStudent(string name)
         {
-            if (string.IsNullOrEmpty(name))
-                _exceptionHandler.HandleException("A Name is required to remove a student from a gradebook.");
-            var student = Students.FirstOrDefault(e => e.Name == name);
-
-            if (student == null)
-            {
-                _logger.log("Student {0} was not found, try again.", name);
-                return;
-            }
+            _methodParameterNullCheckerGradeBook.StudentNameCheckForNull(name);
+           var student = _studentNullCheckerGradeBook.CheckIfStudentQueryIsNullOtherwiseAddIt(name);
             Students.Remove(student);
         }
 
