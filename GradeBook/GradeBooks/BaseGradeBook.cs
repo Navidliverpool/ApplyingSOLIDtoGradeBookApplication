@@ -10,6 +10,7 @@ namespace GradeBook.GradeBooks
 {
     public class BaseGradeBook
     {
+        private readonly StudentNameTypeEnrollmentHolder _studentNameTypeEnrollmentHolder;
         private readonly AddRemoveStudents _addRemoveStudents;
         private readonly MethodParameterNullCheckerGradeBook _methodParameterNullCheckerGradeBook;
         private readonly StudentNullCheckerGradeBook _studentNullCheckerGradeBook;
@@ -25,7 +26,8 @@ namespace GradeBook.GradeBooks
           GradeBookLoader gradeBookLoader,
           StudentNullCheckerGradeBook StudentNullCheckerGradeBook,
           MethodParameterNullCheckerGradeBook methodParameterNullCheckerGradeBook,
-          AddRemoveStudents addRemoveStudents)
+          AddRemoveStudents addRemoveStudents,
+          StudentNameTypeEnrollmentHolder studentNameTypeEnrollmentHolder)
         {
             Name = name;
             Students = new List<Student>();
@@ -35,6 +37,7 @@ namespace GradeBook.GradeBooks
             _studentNullCheckerGradeBook = StudentNullCheckerGradeBook;
             _methodParameterNullCheckerGradeBook = methodParameterNullCheckerGradeBook;
             _addRemoveStudents = addRemoveStudents;
+            _studentNameTypeEnrollmentHolder = studentNameTypeEnrollmentHolder;
         }
         
         public void AddGrade(string name, double score)
@@ -68,7 +71,9 @@ namespace GradeBook.GradeBooks
         {
             foreach (var student in Students)
             {
+
                 Console.WriteLine("{0} : {1} : {2}", student.Name, student.Type, student.Enrollment);
+                _logger.log("{0} : {1} : {2}", _studentNameTypeEnrollmentHolder.Name, _studentNameTypeEnrollmentHolder.Type, _studentNameTypeEnrollmentHolder.Enrollment);
                
             }
         }
